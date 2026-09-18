@@ -135,7 +135,7 @@ def build_status():
     global request_count
     request_count += 1
     return {
-        "message": "Hello from the Mandvi Education Society DevOps session!",
+        "message": "Hello from Dhruv tothe Mandvi Education Society DevOps session!",
         "container_hostname": socket.gethostname(),
         "served_by_env": os.environ.get("APP_ENV", "local"),
         "request_number": request_count,
