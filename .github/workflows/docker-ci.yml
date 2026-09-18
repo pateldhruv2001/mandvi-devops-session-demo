@@ -45,5 +45,13 @@ jobs:
 
       - name: Smoke test
         run: |
-          sleep 3
-          curl -sf http://localhost:5050/health
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -sf http://localhost:5050/health; then
+              echo "App is up."
+              exit 0
+            fi
+            echo "Not ready yet, retrying..."
+            sleep 2
+          done
+          echo "App did not become healthy in time"
+          exit 1
