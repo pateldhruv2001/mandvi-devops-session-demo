@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Push, and Deploy
 
 on:
   push:
@@ -24,3 +24,26 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/devops-session-app:${{ github.sha }}
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/devops-session-app:latest
+
+  # This job runs on YOUR OWN laptop (the self-hosted runner), not GitHub's cloud.
+  # That's the whole point of CD here: GitHub's own runners are thrown away after
+  # each job, so they can't host a long-running app. Your laptop can.
+  deploy:
+    needs: build-and-push
+    runs-on: [self-hosted, docker]
+    steps:
+      - name: Pull latest image
+        run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/devops-session-app:latest
+
+      - name: Redeploy container
+        run: |
+          docker rm -f devops-session-app-live || true
+          docker run -d --name devops-session-app-live \
+            -p 5050:5000 \
+            -e APP_ENV=github-actions-cd \
+            ${{ secrets.DOCKERHUB_USERNAME }}/devops-session-app:latest
+
+      - name: Smoke test
+        run: |
+          sleep 3
+          curl -sf http://localhost:5050/health
