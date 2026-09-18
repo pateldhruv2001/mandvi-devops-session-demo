@@ -28,30 +28,30 @@ jobs:
   # This job runs on YOUR OWN laptop (the self-hosted runner), not GitHub's cloud.
   # That's the whole point of CD here: GitHub's own runners are thrown away after
   # each job, so they can't host a long-running app. Your laptop can.
-  # deploy:
-  #   needs: build-and-push
-  #   runs-on: [self-hosted, docker]
-  #   steps:
-  #     - name: Pull latest image
-  #       run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/devops-session-app:latest
+  deploy:
+    needs: build-and-push
+    runs-on: [self-hosted, docker]
+    steps:
+      - name: Pull latest image
+        run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/devops-session-app:latest
 
-  #     - name: Redeploy container
-  #       run: |
-  #         docker rm -f devops-session-app-live || true
-  #         docker run -d --name devops-session-app-live \
-  #           -p 5050:5000 \
-  #           -e APP_ENV=github-actions-cd \
-  #           ${{ secrets.DOCKERHUB_USERNAME }}/devops-session-app:latest
+      - name: Redeploy container
+        run: |
+          docker rm -f devops-session-app-live || true
+          docker run -d --name devops-session-app-live \
+            -p 5050:5000 \
+            -e APP_ENV=github-actions-cd \
+            ${{ secrets.DOCKERHUB_USERNAME }}/devops-session-app:latest
 
-  #     - name: Smoke test
-  #       run: |
-  #         for i in 1 2 3 4 5 6 7 8 9 10; do
-  #           if curl -sf http://localhost:5050/health; then
-  #             echo "App is up."
-  #             exit 0
-  #           fi
-  #           echo "Not ready yet, retrying..."
-  #           sleep 2
-  #         done
-  #         echo "App did not become healthy in time"
-  #         exit 1
+      - name: Smoke test
+        run: |
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -sf http://localhost:5050/health; then
+              echo "App is up."
+              exit 0
+            fi
+            echo "Not ready yet, retrying..."
+            sleep 2
+          done
+          echo "App did not become healthy in time"
+          exit 1
