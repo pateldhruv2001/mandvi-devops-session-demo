@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: page-processor
+  labels:
+    app: page-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: page-processor
+  template:
+    metadata:
+      labels:
+        app: page-processor
+    spec:
+      containers:
+        - name: page-processor
+          image: vish/stress
+          args: ["-cpus", "1"]
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: page-processor-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: page-processor
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
