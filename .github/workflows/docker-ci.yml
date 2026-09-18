@@ -30,7 +30,7 @@ jobs:
   # each job, so they can't host a long-running app. Your laptop can.
   deploy:
     needs: build-and-push
-    runs-on: [self-hosted, docker]
+    runs-on: [self-hosted]
     steps:
       - name: Pull latest image
         run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/devops-session-app:latest
