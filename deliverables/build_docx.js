@@ -118,7 +118,7 @@ children.push(
   }),
   new Paragraph({
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: "Resource Person: Dhruv Hemanthbhai Patel, DevOps Engineer at Raapid Inc.", size: 22 })],
+    children: [new TextRun({ text: "Resource Person: Dhruv Hemantbhai Patel, DevOps Engineer at Raapid Inc.", size: 22 })],
     spacing: { after: 800 },
   }),
   callout(

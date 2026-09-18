@@ -108,7 +108,7 @@ titleSlide(
   pres,
   "DevOps in Production",
   "Git, IaC, Docker, and the Architecture Behind Scale",
-  `Resource Person: Dhruv Hemanthbhai Patel  |  DevOps Engineer at Raapid Inc.
+  `Resource Person: Dhruv Hemantbhai Patel  |  DevOps Engineer at Raapid Inc.
 19 September  |  12:00 PM  |  Computer Lab - B
 Affiliated to GTU Ahmedabad, Approved by AICTE, New Delhi`
 );
