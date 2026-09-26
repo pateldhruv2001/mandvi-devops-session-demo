@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 from flask import Flask, jsonify, render_template_string
 
-app = Flask(__name__)
+app = Flask(__name__) 
 
 # In-memory counter to show that each container has its own state
 request_count = 0
