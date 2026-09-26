@@ -111,7 +111,7 @@ PAGE_TEMPLATE = """
 <body>
   <div class="card">
     <div class="header">
-      <h1>THE MANDVI EDUCATION SOCIETY - MCA</h1>
+      <h1>The Best College - THE MANDVI EDUCATION SOCIETY - MCA</h1>
       <p>Workshop by Dhruv: DevOps in Production - Git, IaC, Docker &amp; the Architecture Behind Scale</p>
     </div>
     <div class="body">
